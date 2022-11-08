@@ -22,6 +22,26 @@ const client = new MongoClient(uri, {
   serverApi: ServerApiVersion.v1,
 });
 
+async function run() {
+  try {
+    const serviceCollection = client
+      .db("awesomelyEating")
+      .collection("services");
+
+    app.get("/service", async (req, res) => {
+      const query = {};
+      const cursor = serviceCollection.find(query);
+      const service = await cursor.limit(3).toArray();
+      res.send(service);
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      error: error.message,
+    });
+  }
+}
+run().catch((err) => console.log(err));
 app.listen(port, () => {
   console.log(`awesomely eating server running ${port}`);
 });
