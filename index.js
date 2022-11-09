@@ -52,7 +52,6 @@ async function run() {
 
     // reveiws api
     app.get("/reviews", async (req, res) => {
-      const id = req.params.id;
       const query = {};
       const cursor = reviewCollection.find(query);
       const reviews = await cursor.toArray();
