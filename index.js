@@ -92,20 +92,14 @@ async function run() {
     });
 
     app.patch("/myReviews/:id", async (req, res) => {
-      // const id = req.params.id;
-      // const query = { _id: ObjectId(id) };
+      const id = req.params.id;
+      console.log(id);
 
-      // const updatedDoc = {
-      //   $set: req.body,
-      // };
-      // const result = await reviewCollection.updateOne(query, updatedDoc);
-      // res.send(result);
-
-      const { id } = req.params;
-      const result = await reviewCollection.updateOne(
-        { _id: ObjectId(id) },
-        { $set: req.body }
-      );
+      const query = { _id: ObjectId(id) };
+      console.log(req.body);
+      const result = await reviewCollection.updateOne(query, {
+        $set: req.body,
+      });
       if (result.matchedCount) {
         res.send(result);
       }
